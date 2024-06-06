@@ -6,4 +6,4 @@ COPY . /app
 
 EXPOSE 5000
 
-CMD sleep 10 && python servicio1.py
+CMD tail -f /dev/null
