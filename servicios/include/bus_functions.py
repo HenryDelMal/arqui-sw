@@ -14,8 +14,18 @@ def generate_sinit(service_name):
 
 def extract_string_bus(input_string):
     input_string = input_string.decode()  # Convert byte string to regular string
-    length = int(input_string[:5])
-    service_name = input_string[5:10]  # Extract the next 5 characters as the service name
-    status = input_string[10]  # Extract the status character
-    command = input_string[11:length+10]  # Skip the status and service name, and extract the rest of the string
+    service_name = input_string[:5]  # Extract the first 5 characters as the service name
+    status = input_string[5:7]  # Extract the next 2 characters as the status
+    command = input_string[7:]  # The rest of the string is the command
     return service_name, status, command
+
+def generate_string(service_name, command):
+    length = len(command)
+    input_string = f"{length:05d}{service_name[:5]}{command}".encode()
+    return input_string
+
+def extract_string_client(input_string):
+    input_string = input_string.decode()  # Convert byte string to regular string
+    service_name = input_string[:5]  # Extract the first 5 characters as the service name
+    command = input_string[5:]  # Skip the service name and extract the rest of the string
+    return service_name, command

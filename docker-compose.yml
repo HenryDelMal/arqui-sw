@@ -6,6 +6,8 @@ services:
     image: jrgiadach/soabus:v1
     container_name: soabus
     restart: always
+    ports:
+      - "5500:5000"
   
   servicio1:
     container_name: servicio1
@@ -13,7 +15,7 @@ services:
     build:
       context: ./servicios
       dockerfile: Dockerfile
-    command: sh -c "sleep 6 && python servicio1.py"
+    command: sh -c "sleep 6 && python -u servicio1.py"
     volumes:
       - ./servicios:/app/
     depends_on:
