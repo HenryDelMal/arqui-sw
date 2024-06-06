@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # ----------- bus ----------- #
+  bus:
+    image: jrgiadach/soabus:v1
+    container_name: soabus
+    restart: always
+  
+  servicio1:
+    container_name: servicio1
+    restart: no
+    build:
+      context: ./servicios
+      dockerfile: Dockerfile
+    command: sh -c "sleep 6 && python servicio1.py"
+    volumes:
+      - ./servicios:/app/
+    depends_on:
+      - bus
+    environment:
+          - SOABUS_HOST=soabus
