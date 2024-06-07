@@ -23,12 +23,31 @@ services:
       - POSTGRESQL_DATABASE=arquisw
       - ALLOW_EMPTY_PASSWORD=yes
       - POSTGRESQL_PASSWORD=postgres
+      - POSTGRES_PASSWORD=postgres
   
+  # ----------- servicio_bdd ----------- #
+
+  servicio_bdd:
+    container_name: servicio_bdd
+    restart: always
+    build:
+      context: ./servicios
+      dockerfile: Dockerfile
+    command: sh -c "sleep 6 && python -u servicio_bdd.py"
+    volumes:
+      - ./servicios:/app/
+    depends_on:
+      - bus
+      - postgres
+    environment:
+          - SOABUS_HOST=soabus
+
+
   # ----------- servicio1 ----------- #
 
   servicio1:
     container_name: servicio1
-    restart: no
+    restart: always
     build:
       context: ./servicios
       dockerfile: Dockerfile

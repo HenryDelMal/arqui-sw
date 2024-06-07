@@ -1,6 +1,7 @@
 from include.bus_functions import *
+from include.database_functions import *
 
-service_name = "serv1"
+service_name = "SERBD"
 
 try:
 
@@ -28,9 +29,13 @@ try:
                     print("That's for me")
                     print("Command:", command)
 
+                    # Execute the command as a SQL query
+
+                    result = execute_query(command)
+
                     # Send the answer to the bus (who sends it to the client)
                     print ("Send answer")
-                    message = generate_string(service_name, "ANSWERFROMSERV1")
+                    message = generate_string(service_name, result)
                     print('sending {!r}'.format (message))
                     sock.sendall (message)
 
