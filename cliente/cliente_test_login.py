@@ -27,7 +27,7 @@ try:
             if answer == "ERROR" or status == "NK":
                 print("Error al ingresar.")
             else:
-                print("Bienvenido {}.", answer)
+                print('Bienvenido {!r}.'.format(answer))
             break
         break
 

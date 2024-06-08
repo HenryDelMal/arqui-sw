@@ -6,7 +6,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE recorridos (
-    id PRIMARY KEY,
+    id INT PRIMARY KEY,
     inicio VARCHAR(50) NOT NULL,
     final VARCHAR(50) NOT NULL
 );
