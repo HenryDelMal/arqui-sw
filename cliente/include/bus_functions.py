@@ -18,3 +18,4 @@ def extract_string_bus(input_string):
     status = input_string[5:7]  # Extract the next 2 characters as the status
     command = input_string[7:]  # The rest of the string is the command
     return service_name, status, command
+

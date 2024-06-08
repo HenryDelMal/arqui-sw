@@ -29,3 +29,26 @@ def extract_string_client(input_string):
     service_name = input_string[:5]  # Extract the first 5 characters as the service name
     command = input_string[5:]  # Skip the service name and extract the rest of the string
     return service_name, command
+
+def servbd_query(query):
+    service_name = "SERBD"
+
+    print("Send command")  # Remove extra indentation
+    message = generate_string(service_name, query)
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+    while True:
+        # Look for the response
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv (amount_expected - amount_received)
+            amount_received += len(data)
+            print ('received {!r}'.format (data))
+            service_name, status, answer = extract_string_bus(data)
+            print("Status:", status)
+            print("Service Name:", service_name)
+            print("Answer:", answer)
+            print ('closing socket')
+            return answer
