@@ -33,7 +33,7 @@ def extract_string_client(input_string):
 def servbd_query(query):
     service_name = "SERBD"
 
-    print("Send command")  # Remove extra indentation
+    print("Send command")
     message = generate_string(service_name, query)
     print('sending {!r}'.format(message))
     sock.sendall(message)

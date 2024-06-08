@@ -24,8 +24,8 @@ try:
             #print("Status:", status)
             #print("Service Name:", service_name)
             #print("Answer:", answer)
-            if answer == "ERROR":
-                print("Usuario o password incorrecto.")
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
             else:
                 print("Bienvenido {}.", answer)
             break
