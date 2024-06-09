@@ -53,38 +53,31 @@ def main():
     username = None
     user_type = None
 
-    while True:
+    username, user_type = iniciar_sesion('LOGIN')
+
+    if user_type:
+        logged_in = True
+
+
+    while logged_in:
         if logged_in:
             print("Hola {} de rol {}, seleccione una opción:".format(username, user_type))
         else:
             print("Seleccione una opción:")
-
-        if logged_in:
-            print("1. Cerrar sesión")
-        else:
-            print("1. Iniciar sesión")
             
-        print("2. Consultar estado del bus")
-        print("3. Salir")
+        print("1. Consultar estado del bus")
+        print("2. Salir")
         
-        option = input("Ingrese 1, 2 o 3: ")
+        option = input("Ingrese opción: ")
 
         if option == '1':
-            if logged_in:
-                username, user_type = cerrar_sesion()
-                logged_in = False
-            else:
-                username, user_type = iniciar_sesion('LOGIN')
-                if user_type:
-                    logged_in = True
-        elif option == '2':
             consultar_estado_bus('BUSES')
-        elif option == '3':
+        elif option == '2':
             print("Saliendo del programa.")
             sock.close()
             break
         else:
-            print("Opción no válida. Por favor, ingrese 1, 2 o 3.")
+            print("Opción no válida. Por favor, ingrese 1 o 2.")
 
 if __name__ == "__main__":
     main()
