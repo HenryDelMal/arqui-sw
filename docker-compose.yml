@@ -57,3 +57,19 @@ services:
       - bus
     environment:
           - SOABUS_HOST=soabus
+
+  # ----------- servicio_login ----------- #
+
+  servicio_buses:
+    container_name: servicio_buses
+    restart: always
+    build:
+      context: ./servicios
+      dockerfile: Dockerfile
+    command: sh -c "sleep 6 && python -u servicio_buses.py"
+    volumes:
+      - ./servicios:/app/
+    depends_on:
+      - bus
+    environment:
+          - SOABUS_HOST=soabus
