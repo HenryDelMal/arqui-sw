@@ -29,7 +29,7 @@ def cerrar_sesion():
 
 def consultar_estado_bus(service_name):
     print(service_name)
-    bus = input("Ingrese bus: ")
+    bus = input("Ingrese recorrido: ")
 
     message = generate_string(service_name, '{}'.format(bus))
     sock.sendall(message)
@@ -44,7 +44,7 @@ def consultar_estado_bus(service_name):
             if answer == "ERROR" or status == "NK":
                 print("Error al consultar el estado del bus.")
             else:
-                print('Estado del bus: {}.'.format(answer))
+                print('Próximos buses: \n\n{}\n'.format(answer))
             break
         break
 
@@ -69,13 +69,13 @@ def main():
         else:
             print("Seleccione una opción:")
             
-        print("1. Consultar estado del bus")
+        print("1. Consultar recorrido")
         print("2. Salir")
         
         option = input("Ingrese opción: ")
 
         if option == '1':
-            consultar_estado_bus('BUSES')
+            consultar_estado_bus('VIAJE')
         elif option == '2':
             print("Saliendo del programa.")
             sock.close()
