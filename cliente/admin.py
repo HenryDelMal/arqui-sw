@@ -90,6 +90,29 @@ def registro_bus(service_name):
                 print('Se ha ingresado correctamente')
                 return patente, answer
         break
+def registro_recorrido(service_name):
+    print(service_name)
+                
+    id = input("Ingrese id: ")
+    inicio = input("Ingrese inicio: ")
+    final = input("Ingrese final: ")
+    message = generate_string(service_name, 'INS,{},{},{}'.format(id, inicio, final))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print('Se ha ingresado correctamente')
+                return id, answer
+        break
 
 def main():
     logged_in = False
@@ -114,7 +137,8 @@ def main():
             
         print("1. Registrar usuario")
         print("2. Registrar bus")
-        print("3. Salir")
+        print("3. Registrar recorrido")
+        print("4. Salir")
         
         option = input("Ingrese opción: ")
 
@@ -124,6 +148,8 @@ def main():
             case '2':
                 registro_bus("BUSES")
             case '3':
+                registro_recorrido("RECOR")
+            case '4':
                 print("Saliendo del programa.")
                 sock.close()
                 break
