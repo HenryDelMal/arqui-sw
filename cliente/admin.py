@@ -50,7 +50,7 @@ def registro(service_name):
     username = input("Ingrese usuario: ")
     password = input("Ingrese password: ")
 
-    message = generate_string(service_name, '{},{},{}'.format(username, password, type))
+    message = generate_string(service_name, 'INS,{},{},{}'.format(username, password, type))
     sock.sendall(message)
     while True:
         amount_received = 0

@@ -48,6 +48,56 @@ def consultar_estado_bus(service_name):
             break
         break
 
+def get_list(service_name):
+    message = generate_string(service_name, '{}'.format("GET_LIST"))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error.")
+                return -1
+            else:
+                return answer
+        break
+
+
+def registro_viaje(service_name):
+    print(service_name)
+    hora_i = input('Ingrese tiempo de inicio en formato "aaaa-mm-dd hh:mm:ss": ')
+    hora_f = input('Ingrese tiempo de termino en formato "aaaa-mm-dd hh:mm:ss": ')
+    estado = input('Ingrese estado: ')
+    localizacion = input('Ingrese localizacion: ')
+    bus_id = input('Ingrese el bus\n' + get_list("BUSES")+'\n')
+    conductor_id = input('Ingrese el conductor\n' + get_list("REGIS")+'\n')
+    recorrido_id = input('Ingrese el recorrido\n' + get_list("RECOR")+'\n')
+
+    # INSERT into viajes (hora_inicio, hora_final, estado, localizacion, bus_id, conductor_id, recorrido_id)
+    # values ('2021-06-01 08:00:00', '2021-06-01 09:00:00', 'en_curso', 'Maitencillo Adentro', 1, 1, 101)
+
+    message = generate_string(service_name, 'INS,{},{},{},{},{},{},{}'.format(hora_i, hora_f, estado, localizacion, bus_id, conductor_id, recorrido_id))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print('Se ha ingresado correctamente')
+                return id, answer
+        break
+
 def main():
     logged_in = False
     username = None
@@ -65,19 +115,23 @@ def main():
         else:
             print("Seleccione una opción:")
             
-        print("1. Consultar estado del bus")
-        print("2. Salir")
+        print("1. Registrar un viaje")
+        print("2. Consultar estado del bus")
+        print("3. Salir")
         
         option = input("Ingrese opción: ")
 
-        if option == '1':
-            consultar_estado_bus('BUSES')
-        elif option == '2':
-            print("Saliendo del programa.")
-            sock.close()
-            break
-        else:
-            print("Opción no válida. Por favor, ingrese 1 o 2.")
+        match option:
+            case '1':
+                registro_viaje("VIAJE")
+            case '2':
+                consultar_estado_bus('BUSES')
+            case '3':
+                print("Saliendo del programa.")
+                sock.close()
+                break
+            case _:
+                print("Opción no válida. Por favor, ingrese 1 o 2.")
 
 if __name__ == "__main__":
     main()
