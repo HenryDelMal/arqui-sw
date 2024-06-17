@@ -32,7 +32,7 @@ try:
 
                     if command.startswith("GET"):
                         recorrido = command[3:]
-                        query = "SELECT buses.patente, viajes.localizacion FROM buses JOIN viajes ON buses.id = viajes.bus_id WHERE viajes.recorrido_id = '{}';".format(recorrido)
+                        query = "SELECT buses.patente, viajes.localizacion FROM buses JOIN viajes ON buses.id = viajes.bus_id WHERE viajes.recorrido_id = '{}' AND viajes.estado = 'en_curso';".format(recorrido)
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
