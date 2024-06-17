@@ -31,18 +31,41 @@ try:
                     print("Command:", command)
 
                     # Send the command to the database service
-
-                    patente = command
-                    query = "select estado from buses where patente = '{}'".format(patente)
-                    answer = servbd_query(query)
-                    if answer == "" or answer == "ERROR":
-                        message = generate_string(service_name, "ERROR")
-                        print('sending {!r}'.format (message))
-                        sock.sendall (message)
+                    if command.split(",")[0] == "INS":
+                        ins, patente, modelo, estado = command.split(',')
+                        query = "INSERT into buses (patente, modelo, estado) values ('{}', '{}', '{}')".format(patente, modelo, estado)
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                    if command == "GET_LIST":
+                        query = "select * from buses"
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
                     else:
-                        message = generate_string(service_name, answer)
-                        print('sending {!r}'.format (message))
-                        sock.sendall (message)
+                        patente = command
+                        query = "select estado from buses where patente = '{}'".format(patente)
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
 
 finally:
     print ('closing socket')

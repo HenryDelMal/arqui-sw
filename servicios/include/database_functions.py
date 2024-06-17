@@ -31,7 +31,7 @@ def execute_query(query):
 
     except Exception as e:
         # Handle the exception and return "ERROR"
-        return "ERROR"
+        return "ERROR DB: " + e
 
     finally:
         # Close the cursor and connection

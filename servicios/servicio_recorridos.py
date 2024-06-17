@@ -1,6 +1,6 @@
 from include.bus_functions import *
 
-service_name = "REGIS"
+service_name = "RECOR"
 
 #bdd_service = "SERBD"
 
@@ -32,8 +32,8 @@ try:
 
                     # Send the command to the database service
                     if command.split(",")[0] == "INS":
-                        ins, user, password, type = command.split(',')
-                        query = "INSERT into users (email, password, type) values ('{}', '{}', '{}')".format(user, password, type)
+                        ins, id, inicio, final = command.split(',')
+                        query = "INSERT into recorridos (id, inicio, final) values ({}, '{}', '{}')".format(id, inicio, final)
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
@@ -44,7 +44,7 @@ try:
                             print('sending {!r}'.format (message))
                             sock.sendall (message)
                     if command == "GET_LIST":
-                        query = "select id, email from users where type = 'conductor'"
+                        query = "select * from recorridos"
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
