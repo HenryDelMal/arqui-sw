@@ -32,7 +32,7 @@ try:
 
                     # Send the command to the database service
 
-                    user, password, type = command.split(',')
+                    type, user, password, type = command.split(',')
                     query = "INSERT into users (email, password, type) values ('{}', '{}', '{}')".format(user, password, type)
                     answer = servbd_query(query)
                     if answer == "" or answer == "ERROR":
