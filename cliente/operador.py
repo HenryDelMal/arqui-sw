@@ -98,6 +98,11 @@ def registro_viaje(service_name):
                 return id, answer
         break
 
+def consultar_viajes(service_name):
+    print("pendiente")
+    pass
+
+
 def main():
     logged_in = False
     username = None
@@ -117,7 +122,8 @@ def main():
             
         print("1. Registrar un viaje")
         print("2. Consultar estado del bus")
-        print("3. Salir")
+        print("3. Consultar viajes")
+        print("4. Salir")
         
         option = input("Ingrese opción: ")
 
@@ -127,6 +133,8 @@ def main():
             case '2':
                 consultar_estado_bus('BUSES')
             case '3':
+                consultar_viajes('VIAJE')
+            case '4':
                 print("Saliendo del programa.")
                 sock.close()
                 break
