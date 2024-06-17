@@ -31,6 +31,7 @@ try:
                     print("Command:", command)
 
                     # Send the command to the database service
+<<<<<<< HEAD
                     if command.split(",")[0] == "INS":
                         ins, user, password, type = command.split(',')
                         query = "INSERT into users (email, password, type) values ('{}', '{}', '{}')".format(user, password, type)
@@ -54,6 +55,20 @@ try:
                             message = generate_string(service_name, answer)
                             print('sending {!r}'.format (message))
                             sock.sendall (message)
+=======
+
+                    type, user, password, type = command.split(',')
+                    query = "INSERT into users (email, password, type) values ('{}', '{}', '{}')".format(user, password, type)
+                    answer = servbd_query(query)
+                    if answer == "" or answer == "ERROR":
+                        message = generate_string(service_name, "ERROR")
+                        print('sending {!r}'.format (message))
+                        sock.sendall (message)
+                    else:
+                        message = generate_string(service_name, answer)
+                        print('sending {!r}'.format (message))
+                        sock.sendall (message)
+>>>>>>> 097fc9087012019557ef7bb479fa69e09813410b
 
 finally:
     print ('closing socket')
