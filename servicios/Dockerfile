@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install --no-cache-dir psycopg2-binary
+RUN pip install --no-cache-dir -r requirements.txt
 
 CMD tail -f /dev/null
