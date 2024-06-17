@@ -17,10 +17,15 @@ def execute_query(query):
         cursor.execute(query)
 
         # Fetch all the rows returned by the query
-        rows = cursor.fetchall()
+        if query.strip().lower().startswith("select"):
+            rows = cursor.fetchall()
 
-        # Convert the rows to text
-        result = '\n'.join([', '.join(map(str, row)) for row in rows])
+            # Convert the rows to text
+            result = '\n'.join([', '.join(map(str, row)) for row in rows])    
+        else:
+            # Para comandos que no devuelven resultados (INSERT, UPDATE, DELETE)
+            conn.commit()
+            result = "Query executed successfully"
 
         return result
 
