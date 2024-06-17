@@ -30,19 +30,18 @@ try:
                     print("That's for me")
                     print("Command:", command)
 
-                    # Send the command to the database service
-
-                    recorrido = command
-                    query = "SELECT buses.patente, viajes.localizacion FROM buses JOIN viajes ON buses.id = viajes.bus_id WHERE viajes.recorrido_id = '{}';".format(recorrido)
-                    answer = servbd_query(query)
-                    if answer == "" or answer == "ERROR":
-                        message = generate_string(service_name, "ERROR")
-                        print('sending {!r}'.format (message))
-                        sock.sendall (message)
-                    else:
-                        message = generate_string(service_name, answer)
-                        print('sending {!r}'.format (message))
-                        sock.sendall (message)
+                    if command.startswith("GET"):
+                        recorrido = command[3:]
+                        query = "SELECT buses.patente, viajes.localizacion FROM buses JOIN viajes ON buses.id = viajes.bus_id WHERE viajes.recorrido_id = '{}';".format(recorrido)
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
 
 finally:
     print ('closing socket')

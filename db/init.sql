@@ -21,7 +21,7 @@ CREATE TABLE buses (
 CREATE TABLE viajes (
     id SERIAL PRIMARY KEY,
     hora_inicio TIMESTAMP NOT NULL,
-    hora_final TIMESTAMP NOT NULL,
+    hora_final TIMESTAMP,
     estado VARCHAR(50) NOT NULL,
     localizacion VARCHAR(255) NOT NULL,
     bus_id INT,
@@ -62,3 +62,4 @@ INSERT into viajes (hora_inicio, hora_final, estado, localizacion, bus_id, condu
 INSERT into incidentes (viaje_id, hora, localizacion, descripcion) values (1, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Neumatico pinchado'),
 (2, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Neumatico pinchado'),
 (3, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Incendio en el motor');
+

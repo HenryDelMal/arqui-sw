@@ -29,9 +29,10 @@ def cerrar_sesion():
 
 def consultar_estado_bus(service_name):
     print(service_name)
+    method = "GET"
     bus = input("Ingrese recorrido: ")
 
-    message = generate_string(service_name, '{}'.format(bus))
+    message = generate_string(service_name, '{}'.format(method+bus))
     sock.sendall(message)
     while True:
         amount_received = 0
