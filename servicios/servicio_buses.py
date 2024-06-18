@@ -33,7 +33,7 @@ try:
                     # Send the command to the database service
                     if command.split(",")[0] == "INS":
                         ins, patente, modelo, estado = command.split(',')
-                        query = "INSERT into buses (patente, modelo, estado) values ('{}', '{}', '{}')".format(patente, modelo, estado)
+                        query = "INSERT into buses (patente, modelo, estado) values ('{}', '{}', 'Disponible')".format(patente, modelo, estado)
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
