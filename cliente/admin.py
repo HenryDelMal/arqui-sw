@@ -73,7 +73,7 @@ def registro_bus(service_name):
     patente = input("Ingrese patente: ")
     modelo = input("Ingrese modelo: ")
     estado = input("Ingrese estado: ")
-    message = generate_string(service_name, 'INS,{},{},{}'.format(patente, modelo, estado))
+    message = generate_string(service_name, 'INS,{},{}'.format(patente, modelo))
     sock.sendall(message)
     while True:
         amount_received = 0

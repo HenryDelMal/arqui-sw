@@ -43,8 +43,16 @@ try:
                             print('sending {!r}'.format (message))
                             sock.sendall (message)
                     if command.startswith("INS"):
-                        ins, hora_i, hora_f, estado, localizacion, bus_id, conductor_id, recorrido_id = command.split(",")
-                        query = "INSERT into viajes (hora_inicio, hora_final, estado, localizacion, bus_id, conductor_id, recorrido_id) values ('{}', '{}', '{}', '{}', {}, {}, {})".format(hora_i, hora_f, estado, localizacion, bus_id, conductor_id, recorrido_id)
+                        ins, localizacion, bus_id, conductor_id, recorrido_id = command.split(",")
+                        query = "INSERT into viajes (hora_inicio, estado, localizacion, bus_id, conductor_id, recorrido_id) values (now(), '{}', 'en_curso', '{}', {}, {}, {})".format(hora_i, hora_f, estado, localizacion, bus_id, conductor_id, recorrido_id)
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                    if command.startswith("UPD"):
+                        ins, bus_id = command.split(",")
+                        query = "update viajes set hora_final = now() and estado = 'finalizado' where bus_id = {} and hora_final is null;".format(bus_id)
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
