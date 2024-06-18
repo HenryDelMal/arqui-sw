@@ -41,6 +41,12 @@ CREATE TABLE incidentes (
     FOREIGN KEY (viaje_id) REFERENCES viajes(id)
 );
 
+CREATE TABLE anuncios {
+    id SERIAL PRIMARY KEY,
+    contenido TEXT NOT NULL,
+    fecha TIMESTAMP NOT NULL
+};
+
 
 INSERT into users (email, password, type) values ('usuario1', '1234', 'conductor'),
 ('usuario2', '1234', 'operador'),
@@ -62,3 +68,5 @@ INSERT into viajes (hora_inicio, hora_final, estado, localizacion, bus_id, condu
 INSERT into incidentes (viaje_id, hora, localizacion, descripcion) values (1, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Neumatico pinchado'),
 (2, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Neumatico pinchado'),
 (3, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Incendio en el motor');
+
+INSERT into anuncios (contenido, fecha) values ('Trabajos en ruta L-15', '2021-06-01 08:00:00');
