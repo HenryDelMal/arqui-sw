@@ -41,11 +41,11 @@ CREATE TABLE incidentes (
     FOREIGN KEY (viaje_id) REFERENCES viajes(id)
 );
 
-CREATE TABLE anuncios {
+CREATE TABLE anuncios (
     id SERIAL PRIMARY KEY,
     contenido TEXT NOT NULL,
     fecha TIMESTAMP NOT NULL
-};
+);
 
 
 INSERT into users (email, password, type) values ('usuario1', '1234', 'conductor'),
