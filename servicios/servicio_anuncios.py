@@ -37,11 +37,11 @@ try:
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
-                            print('sending BIEEEEEEEEEN {!r}'.format (message))
+                            print('sending {!r}'.format (message))
                             sock.sendall (message)
                         else:
                             message = generate_string(service_name, answer)
-                            print('sending MAAAAAAAAAAAL {!r}'.format (message))
+                            print('sending {!r}'.format (message))
                             sock.sendall (message)
 
 finally:
