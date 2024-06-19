@@ -50,8 +50,7 @@ def consultar_estado_bus(service_name):
         break
 
 def consultar_anuncios(service_name,user_type):
-    print(service_name)
-    print(user_type)      
+    print(service_name)   
     message = generate_string(service_name, 'GET,{}'.format(user_type))
     sock.sendall(message)
     while True:

@@ -100,7 +100,10 @@ def registro_viaje(service_name):
 def registro_anuncio(service_name):
     print(service_name)
     # fecha = input('Ingrese fecha del mensaje en formato "aaaa-mm-dd hh:mm:ss": ')
-    destino = input('Ingrese a que usuario se dirige el anuncio: ')
+    destino = input('Ingrese a que usuario se dirige el anuncio (conductor o pasajero): ')
+    if destino != 'conductor' and destino != 'pasajero':
+        print("Usuario de destino no válido")
+        return None
     contenido = input('Ingrese el contenido del anuncio: ')
 
     # INSERT into viajes (hora_inicio, hora_final, estado, localizacion, bus_id, conductor_id, recorrido_id)
