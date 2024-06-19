@@ -43,6 +43,7 @@ CREATE TABLE incidentes (
 
 CREATE TABLE anuncios (
     id SERIAL PRIMARY KEY,
+    destino TEXT NOT NULL,
     contenido TEXT NOT NULL,
     fecha TIMESTAMP NOT NULL
 );
@@ -69,4 +70,4 @@ INSERT into incidentes (viaje_id, hora, localizacion, descripcion) values (1, '2
 (2, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Neumatico pinchado'),
 (3, '2021-06-01 08:30:00', 'Maitencillo Adentro', 'Incendio en el motor');
 
-INSERT into anuncios (contenido, fecha) values ('Trabajos en ruta L-15', '2021-06-01 08:00:00');
+INSERT into anuncios (destino, contenido, fecha) values ('conductor', 'Trabajos en ruta L-15', '2021-06-01 08:00:00');

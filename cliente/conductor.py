@@ -63,6 +63,27 @@ def enviar_alerta(service_name):
         break
     pass
 
+def consultar_anuncios(service_name,user_type):
+    print(service_name)
+    print(user_type)      
+    message = generate_string(service_name, 'GET,{}'.format(user_type))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print(answer)
+                return id, answer
+        break
+    pass
 
 def main():
     logged_in = False
@@ -74,7 +95,7 @@ def main():
     if user_type == 'conductor':
         logged_in = True
     else:
-        print("Usuario no es un pasajero. Saliendo del programa.")
+        print("Usuario no es un conductor. Saliendo del programa.")
         sock.close()
         return
 
@@ -89,8 +110,8 @@ def main():
         print("2. Terminar viaje")
         print("3. Consultar estado de ruta")
         print("4. Enviar alerta de incidente")
-        
-        print("5. Salir")
+        print("5. Consultar anuncios")
+        print("6. Salir")
         
         option = input("Ingrese opción: ")
         match option:
@@ -104,6 +125,8 @@ def main():
             case '4':
                 enviar_alerta('INCID')
             case '5':
+                consultar_anuncios('ANUNC', user_type)
+            case '6':
                 print("Saliendo del programa.")
                 sock.close()
                 break

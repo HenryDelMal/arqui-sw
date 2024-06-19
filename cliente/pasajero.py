@@ -49,6 +49,29 @@ def consultar_estado_bus(service_name):
             break
         break
 
+def consultar_anuncios(service_name,user_type):
+    print(service_name)
+    print(user_type)      
+    message = generate_string(service_name, 'GET,{}'.format(user_type))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print(answer)
+                return id, answer
+        break
+    pass
+
+
 def main():
     logged_in = False
     username = None
@@ -71,13 +94,16 @@ def main():
             print("Seleccione una opción:")
             
         print("1. Consultar recorrido")
-        print("2. Salir")
+        print("2. Consultar anuncios")
+        print("3. Salir")
         
         option = input("Ingrese opción: ")
 
         if option == '1':
             consultar_estado_bus('VIAJE')
         elif option == '2':
+            consultar_anuncios('ANUNC', user_type)
+        elif option == '3':
             print("Saliendo del programa.")
             sock.close()
             break
