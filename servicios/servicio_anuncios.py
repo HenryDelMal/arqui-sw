@@ -30,13 +30,18 @@ try:
                     print("That's for me")
                     print("Command:", command)
 
-                    if command.startswith("INS"):
+
+                    if command.split(",")[0] == "INS":
                         ins, contenido, fecha = command.split(",")
-                        query = "INSERT into anuncios (contenido, fecha) values ({}, {})".format(contenido, fecha)
+                        query = "INSERT into anuncios (contenido, fecha) values ('{}', '{}')".format(contenido, fecha)
                         answer = servbd_query(query)
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
-                            print('sending {!r}'.format (message))
+                            print('sending BIEEEEEEEEEN {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending MAAAAAAAAAAAL {!r}'.format (message))
                             sock.sendall (message)
 
 finally:

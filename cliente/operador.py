@@ -120,7 +120,7 @@ def registro_anuncio(service_name):
                 return None, None
             else:
                 print('Se ha registrado el anuncio correctamente')
-                return id, answer
+                return contenido, answer
         break
 
 def consultar_viajes(service_name):
@@ -135,8 +135,12 @@ def main():
 
     username, user_type = iniciar_sesion('LOGIN')
 
-    if user_type:
+    if user_type == 'operador':
         logged_in = True
+    else:
+        print("Usuario no es un operador. Saliendo del programa.")
+        sock.close()
+        return
 
 
     while logged_in:
