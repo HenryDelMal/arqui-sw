@@ -29,8 +29,18 @@ try:
                 if incoming_svr==service_name: # Check if the command is for me
                     print("That's for me")
                     print("Command:", command)
-
-                    if command.startswith("GET"):
+                    if command == "GET_LIST":
+                        query = "select * from viajes"
+                        answer = servbd_query(query)
+                        if answer == "" or answer == "ERROR":
+                            message = generate_string(service_name, "ERROR")
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                        else:
+                            message = generate_string(service_name, answer)
+                            print('sending {!r}'.format (message))
+                            sock.sendall (message)
+                    elif command.startswith("GET"):
                         recorrido = command[3:]
                         query = "SELECT buses.patente, viajes.localizacion FROM buses JOIN viajes ON buses.id = viajes.bus_id WHERE viajes.recorrido_id = '{}' AND viajes.estado = 'en_curso';".format(recorrido)
                         answer = servbd_query(query)
@@ -55,9 +65,13 @@ try:
                             print('sending {!r}'.format (message))
                             sock.sendall (message)
                     if command.startswith("UPD"):
-                        ins, bus_id = command.split(",")
-                        query = "update viajes set hora_final = now() and estado = 'finalizado' where bus_id = {} and hora_final is null;".format(bus_id)
+                        ins, viaje_id, estado = command.split(",")
+                        if estado == "en_curso":
+                            query = "update viajes set estado = 'en_curso' where id = {};".format(viaje_id)
+                        else:
+                            query = "update viajes set estado = 'finalizado' where id = {};".format(viaje_id)
                         answer = servbd_query(query)
+                        
                         if answer == "" or answer == "ERROR":
                             message = generate_string(service_name, "ERROR")
                             print('sending {!r}'.format (message))

@@ -23,13 +23,69 @@ def iniciar_sesion(service_name):
                 # print('Bienvenido {}.'.format(answer))
                 return username, answer
         break
+
+def get_list(service_name):
+    message = generate_string(service_name, '{}'.format("GET_LIST"))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error.")
+                return -1
+            else:
+                return answer
+        break
+
 def iniciar_viaje(service_name):
-    print("pendiente")
-    pass
+    viaje_id = input('Ingrese el viaje\n' + get_list("VIAJE")+'\n')
+    estado = "en_curso"
+
+    message = generate_string(service_name, 'UPD,{},{}'.format(viaje_id, estado))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print('Se ha ingresado correctamente')
+                return id, answer
+        break
+    
 
 def terminar_viaje(service_name):
-    print("pendiente")
-    pass
+    viaje_id = input('Ingrese el viaje\n' + get_list("VIAJE")+'\n')
+    estado = "finalizado"
+
+    message = generate_string(service_name, 'UPD,{},{}'.format(viaje_id, estado))
+    sock.sendall(message)
+    while True:
+        amount_received = 0
+        amount_expected = int(sock.recv(5))
+
+        while amount_received < amount_expected:
+            data = sock.recv(amount_expected - amount_received)
+            amount_received += len(data)
+            service_name, status, answer = extract_string_bus(data)
+            if answer == "ERROR" or status == "NK":
+                print("Error al ingresar.")
+                return None, None
+            else:
+                print('Se ha ingresado correctamente')
+                return id, answer
+        break
 
 def consultar_ruta(service_name):
     print("pendiente")
