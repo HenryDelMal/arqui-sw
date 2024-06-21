@@ -72,11 +72,11 @@ def consultar_anuncios(service_name,user_type):
 
 
 def main():
-    logged_in = False
-    username = None
-    user_type = None
+    logged_in = True
+    username = 'usuario4'
+    user_type = 'pasajero'
 
-    username, user_type = iniciar_sesion('LOGIN')
+    #username, user_type = iniciar_sesion('LOGIN')
 
     if user_type == 'pasajero':
         logged_in = True
@@ -88,7 +88,7 @@ def main():
 
     while logged_in:
         if logged_in:
-            print("Hola {} de rol {}, seleccione una opción:".format(username, user_type))
+            print("¡Hola pasajero!, seleccione una opción:".format(username, user_type))
         else:
             print("Seleccione una opción:")
             
