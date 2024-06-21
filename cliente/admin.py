@@ -31,7 +31,6 @@ def registro(service_name):
             
         print("1. Conductor")
         print("2. Operador")
-        print("3. Pasajero")
 
         op = input("Ingrese opción:")
         match op:
@@ -41,11 +40,8 @@ def registro(service_name):
             case "2":
                 type = "operador"
                 check = False
-            case "3":
-                type = "pasajero"
-                check = False
             case _:
-                print("Opción no válida. Por favor, ingrese 1, 2 o 3.")
+                print("Opción no válida. Por favor, ingrese 1 o 2.")
                 
     username = input("Ingrese usuario: ")
     password = input("Ingrese password: ")
