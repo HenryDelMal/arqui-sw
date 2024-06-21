@@ -163,10 +163,9 @@ def main():
             
         print("1. Iniciar viaje")
         print("2. Terminar viaje")
-        print("3. Consultar estado de ruta")
-        print("4. Enviar alerta de incidente")
-        print("5. Consultar anuncios")
-        print("6. Salir")
+        print("3. Enviar alerta de incidente")
+        print("4. Consultar anuncios")
+        print("5. Salir")
         
         option = input("Ingrese opción: ")
         match option:
@@ -180,8 +179,6 @@ def main():
             case '4':
                 enviar_alerta('INCID')
             case '5':
-                consultar_anuncios('ANUNC', user_type)
-            case '6':
                 print("Saliendo del programa.")
                 sock.close()
                 break
